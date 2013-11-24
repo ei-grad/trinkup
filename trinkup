@@ -2,7 +2,7 @@
 #
 # trinkup - TRivial INcremental bacKUP script
 #
-# Licensed under DWTFYWWI license, but recommended to use before drinkup.
+# Licensed under DWTFYWWI license, but recommended to be used before drinkup.
 #
 
 set -e
