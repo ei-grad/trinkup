@@ -12,18 +12,24 @@ if ! which rsync >/dev/null; then
    exit 1
 fi
 
-USAGE="usage: $0 <rsync_source> <backups_directory> <number_of_backups> [rsync_args]"
+USAGE="
+usage:
+
+    $0 <rsync_source> <backups_directory> <number_of_backups> [rsync_args]
+
+    Keep calm and drink vodka!
+"
 
 SRC="$1"
 BACKUPS="$2"
 ROTATE="$3"
 
-shift 3
-
 if [ -z "$SRC" ] || [ -z "$BACKUPS" ] || ! [ -n "$ROTATE" -a "$ROTATE" -gt 1 ] ; then
-    echo "$USAGE" >&2
+    echo -e "$USAGE" >&2
     exit 1
 fi
+
+shift 3
 
 if ! [ -d "$BACKUPS" ] ; then
     echo "'$BACKUPS' is not a directory!" >&2
