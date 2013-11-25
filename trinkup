@@ -40,8 +40,10 @@ WORKDIR="$(echo "$BACKUPS/`basename \"$SRC\"`.`date +%s`" | sed 's,/\+,/,g')"
 
 echo "Using '$WORKDIR' as backup destination."
 
-OLDEST="`ls -rtd \"$BACKUPS/$(basename "$SRC")\"\.[0-9]* | sed 's,/\+,/,g' | awk NR==$ROTATE`"
-NEWEST="`ls -rtd \"$BACKUPS/$(basename "$SRC")\"\.[0-9]* | sed 's,/\+,/,g' | head -n 1`"
+if [ -d `ls -rtd \"$BACKUPS/$(basename "$SRC")\"\.[0-9]* 2>/dev/null | head -n 1` ] ; then
+    OLDEST="`ls -rtd \"$BACKUPS/$(basename "$SRC")\"\.[0-9]* | sed 's,/\+,/,g' | awk NR==$ROTATE`"
+    NEWEST="`ls -rtd \"$BACKUPS/$(basename "$SRC")\"\.[0-9]* | sed 's,/\+,/,g' | head -n 1`"
+fi
 
 if [ -d "$OLDEST" ] ; then
     echo "Reusing $OLDEST to reduce amount of disk operations."
