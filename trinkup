@@ -52,7 +52,7 @@ fi
 
 if [ -d "$NEWEST" ] ; then
     echo "Syncing with $NEWEST..."
-    cp -al "$NEWEST/." "$WORKDIR"
+    cp -laf "$NEWEST/." "$WORKDIR"
 fi
 
 echo "Running rsync..."
