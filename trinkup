@@ -61,8 +61,8 @@ if [ -d "$OLDEST" ] ; then
 fi
 
 # the main magic thing of incremental backup is here: we don't create the
-# copies of all files, but use hardlinks which point on the same file if it was
-# not change between backups
+# copies of all files, but use hardlinks which point on the same file if it has
+# not been changed between backups
 if [ -d "$NEWEST" ] ; then
     echo "Syncing with '$NEWEST'..."
     cp -laf "$NEWEST/." "$WORKDIR"
