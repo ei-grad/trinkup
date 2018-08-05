@@ -36,29 +36,35 @@ if [ -z "$SRC" ] || [ -z "$BACKUPS" ] || ! [ -n "$ROTATE" -a "$ROTATE" -gt 1 ] ;
     exit 1
 fi
 
-shift 3
-
 if ! [ -d "$BACKUPS" ] ; then
-    echo "'$BACKUPS' is not a directory!" >&2
+    echo "'$BACKUPS' directory should exist!" >&2
     exit 1
 fi
 
+# shift rsync args to $*
+shift 3
+
 WORKDIR="$(echo "$BACKUPS/`date --iso=seconds`" | sed 's,/\+,/,g')"
 
-echo "Using '$WORKDIR' as backup destination."
+echo "Destination directory: '$WORKDIR'"
 
 if [ -n "`ls \"$BACKUPS\"`" ] ; then
     OLDEST="`ls -dr \"$BACKUPS\"/* | awk \"NR==$ROTATE\"`"
     NEWEST="`ls -dr \"$BACKUPS\"/* | awk NR==1`"
 fi
 
+# reusing of old backups improves the performance on large directories since we
+# don't need to remove old backup and create all files in new backup
 if [ -d "$OLDEST" ] ; then
-    echo "Reusing $OLDEST to reduce amount of disk operations."
+    echo "Reusing '$OLDEST' to reduce the disk operations amount."
     mv "$OLDEST" "$WORKDIR"
 fi
 
+# the main magic thing of incremental backup is here: we don't create the
+# copies of all files, but use hardlinks which point on the same file if it was
+# not change between backups
 if [ -d "$NEWEST" ] ; then
-    echo "Syncing with $NEWEST..."
+    echo "Syncing with '$NEWEST'..."
     cp -laf "$NEWEST/." "$WORKDIR"
 fi
 
