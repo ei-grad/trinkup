@@ -43,13 +43,13 @@ if ! [ -d "$BACKUPS" ] ; then
     exit 1
 fi
 
-WORKDIR="$(echo "$BACKUPS/`basename \"$SRC\"`.`date +%s`" | sed 's,/\+,/,g')"
+WORKDIR="$(echo "$BACKUPS/`date --iso=seconds`" | sed 's,/\+,/,g')"
 
 echo "Using '$WORKDIR' as backup destination."
 
-if [ -d `ls -rtd \"$BACKUPS/$(basename "$SRC")\"\.[0-9]* 2>/dev/null | head -n 1` ] ; then
-    OLDEST="`ls -rtd \"$BACKUPS/$(basename "$SRC")\"\.[0-9]* | sed 's,/\+,/,g' | awk NR==$ROTATE`"
-    NEWEST="`ls -rtd \"$BACKUPS/$(basename "$SRC")\"\.[0-9]* | sed 's,/\+,/,g' | head -n 1`"
+if [ -n "`ls \"$BACKUPS\"`" ] ; then
+    OLDEST="`ls -dr \"$BACKUPS\"/* | awk \"NR==$ROTATE\"`"
+    NEWEST="`ls -dr \"$BACKUPS\"/* | awk NR==1`"
 fi
 
 if [ -d "$OLDEST" ] ; then
