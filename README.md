@@ -1,12 +1,14 @@
 trinkup - TRivial INcremental bacKUP script
 ===========================================
 
-> Уж 200 раз твердили Сене:
-> Хардлинк спасет от удаленья!
-> А кто создать его поможет?
-> Crontab и man, тупая рожа!
->
-> (c) linux.org.ru, no-dashi
+```
+Уж 200 раз твердили Сене:
+Хардлинк спасет от удаленья!
+А кто создать его поможет?
+Crontab и man, тупая рожа!
+
+(c) linux.org.ru, no-dashi
+```
 
 Trinkup is intended to be the simplest possible tool for incremental backups.
 It holds the specified number of snapshots for the specified rsync source
