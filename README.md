@@ -37,4 +37,5 @@ Why not just rsync?
 
 Really, rsync could create hardlinks by itself. But it is not useful for
 backups since hardlinks only work within the single filesystem. Trinkup creates
-hardlinks by coping the latest backup directory.
+hardlinks from the latest backup directory, not from the source, so it doesn't
+need to cross the filesystem boundary.
